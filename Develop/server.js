@@ -8,19 +8,22 @@
 //SHOW tables;
 //node server.js
 
-const express = require('express');
-const routes = require('./routes');
-// import sequelize connection
 
-const app = express();
-const PORT = process.env.PORT || 3001;
+const Sequelize = require('sequelize');
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Enable access to .env variables
+require('dotenv').config();
 
-app.use(routes);
+// Use environment variables to connect to database
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  {
+    host: 'localhost',
+    dialect: 'mysql',
+    port: 3306
+  }
+);
 
-// sync sequelize models to the database, then turn on the server
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}!`);
-});
+module.exports = sequelize;
