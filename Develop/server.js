@@ -1,4 +1,5 @@
 //npm i inquirer@8.2.4
+//npm install --save-dev sequelize-cli
 //npm i dotenv mysql2 console.table
 //npm init -y
 //mysql -u root -p
@@ -8,22 +9,16 @@
 //SHOW tables;
 //node server.js
 
+const express = require('express');
+const sequelize = require('./config/connection');
 
-const Sequelize = require('sequelize');
+const app = express();
+const PORT = process.env.PORT || 3001;
 
-// Enable access to .env variables
-require('dotenv').config();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Use environment variables to connect to database
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    host: 'localhost',
-    dialect: 'mysql',
-    port: 3306
-  }
-);
+sequelize.sync().then(() => {
+  app.listen(PORT, () => console.log('Now listening'));
+});
 
-module.exports = sequelize;
