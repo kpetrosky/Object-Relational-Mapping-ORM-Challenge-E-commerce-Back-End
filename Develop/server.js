@@ -23,7 +23,7 @@ const sequelize = new Sequelize('ecommerce_db', 'root', process.env.DB_PASSWORD,
 });
 
 const app = express();
-const PORT = process.env.PORT || 3306;
+const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
