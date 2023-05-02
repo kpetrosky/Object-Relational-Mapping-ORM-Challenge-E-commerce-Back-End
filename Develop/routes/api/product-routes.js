@@ -16,6 +16,7 @@ router.get('/:id', (req, res) => {
 });
 
 // create new product
+//dont change the post and the put, they are fine the way they are
 router.post('/', (req, res) => {
   /* req.body should look like this...
     {

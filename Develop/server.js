@@ -13,14 +13,9 @@
 
 const express = require('express');
 const routes = require('./routes');
-const Sequelize = require('sequelize');
 require('dotenv').config();
 
-const sequelize = new Sequelize('ecommerce_db', 'root', process.env.DB_PASSWORD, {
-  host: 'localhost',
-  dialect: 'mysql',
-  port: 3306
-});
+const sequelize = require("./config/connection");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -32,7 +27,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(routes);
 
 // turn on connection to db and server
-sequelize.authenticate()
+sequelize.sync({force:false})
+//in production force false does not empty the tables of old stuff
+//in development force true will empty the tables
   .then(() => {
     console.log('Connected to the ecommerce_db database.');
     app.listen(PORT, () => console.log('Now listening'));
@@ -40,5 +37,3 @@ sequelize.authenticate()
   .catch((error) => {
     console.error('Unable to connect to the database:', error);
   });
-  
-module.exports = sequelize;
