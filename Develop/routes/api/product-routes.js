@@ -4,17 +4,36 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 // The `/api/products` endpoint
 
 // get all products
-router.get('/', (req, res) => {
-  // find all products
-  // be sure to include its associated Category and Tag data
+router.get('/', async (req, res) => {
+  // find all categories
+  // be sure to include its associated Products
+  try {
+    const allCategory = await Category.findAll({
+      include:[{model:Product}]
+    });
+    res.status(200).json(allCategory);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // get one product
-router.get('/:id', (req, res) => {
-  // find a single product by its `id`
-  // be sure to include its associated Category and Tag data
+router.get('/:id', async (req, res) => {
+  // find one category by its `id` value
+  // be sure to include its associated Products
+try {
+  const category = await Category.findByPk(req.params.id,{
+    include:[{model:Product}]
+  });
+  if (!category) {
+    res.status(404).json({ message: 'No category with this id!' });
+    return;
+  }
+  res.status(200).json(category);
+} catch (err) {
+  res.status(500).json(err);
+}
 });
-
 // create new product
 //dont change the post and the put, they are fine the way they are
 router.post('/', (req, res) => {
@@ -26,6 +45,7 @@ router.post('/', (req, res) => {
       tagIds: [1, 2, 3, 4]
     }
   */
+ 
   Product.create(req.body)
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
@@ -92,6 +112,22 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
+  router.delete('/:id', async (req, res) => {
+    // delete a category by its `id` value
+    try {
+      const deleteCategory = await Category.destroy({
+        where: { id: req.params.id }
+      });
+      if (!deleteCategory) {
+        res.status(404).json({ message: 'No category with this id!' });
+        return;
+      }
+      res.status(200).json(deleteCategory);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+  
 });
 
 module.exports = router;
