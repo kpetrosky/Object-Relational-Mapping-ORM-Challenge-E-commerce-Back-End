@@ -21,22 +21,29 @@ THEN I am able to successfully create, update, and delete data in my database
 Provide a short description explaining the what, why, and how of your project. Use the following questions as a guide:
 
 - What was your motivation?
+    My motivation for this project is to use the backend to create a database that using insomnia
 - Why did you build this project? (Note: the answer is not "Because it was a homework assignment.")
+    I built this project to continue growing as developer. Getting the backend to talk to the frontend is difficult, this project helped me understand how to use seeds and insomnia.  
 - What problem does it solve?
+    The problem was connecting a database use Sequelize. 
 - What did you learn?
-
-## Table of Contents (Optional)
-
-If your README is long, add a table of contents to make it easy for users to find what they need.
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Credits](#credits)
-- [License](#license)
+    I learned how to connect the database use Sequelize and how set up insomnia to check the database 
 
 ## Installation
 
 What are the steps required to install your project? Provide a step-by-step description of how to get the development environment running.
+//npm i inquirer@8.2.4
+//npm i express
+//npm install --save-dev sequelize-cli
+//npm i dotenv mysql2 console.table
+//npm install --save sequelize
+//npm init -y
+//mysql -u root -p
+//SOURCE schema.sql;
+//SOURCE insert-schema.sql;
+//SHOW databases;
+//SHOW tables;
+//node server.js
 
 ## Usage
 
